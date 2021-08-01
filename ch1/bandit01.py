@@ -34,3 +34,10 @@ def estimate_means(bandit,steps):
         averages.append(sum(rewards[arm])/len(rewards[arm]))
     
     return averages
+
+bandit = Bandit()
+estimates = estimate_means(bandit, steps = 1000)
+
+ax = DataFrame({"Estimate":estimates, "Mean":bandit.means}).plot(kind="bar")
+_ = ax.set_xlabel("arm")
+_ = ax.set_ylabel("Reward")
