@@ -49,4 +49,20 @@ for alpha in [0, 0.1, 0.5, 0.9]:
     
 ax = DataFrame(rewards).plot()
 _ = ax.set_xlabel('Step')
-_ = ax.set.ylabel('Total rewards')
+_ = ax.set_ylabel('Total rewards')
+
+def hypertune(values, num_samples):
+    rewards = {}
+    for alpha in values:
+        scores = []
+        for _ in range(num_samples):
+            bandit = Bandit()
+            result = episode(bandit, alpha, steps=2000)
+            scores.append(result[-1])
+            rewards['{:1.1f}'.format(alpha)] = scores
+        
+        ax = DataFrame(rewards).plot(kind='box',figsize=(6,8))
+        _ = ax.set_xlabel('α')
+        _ = ax.set_ylabel('Total rewards')
+
+hypertune(np.linspace(0, 1.0, 11), num_sample=500)
